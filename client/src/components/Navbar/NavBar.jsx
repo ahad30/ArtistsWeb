@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu } from 'lucide-react'
-import { Button } from 'antd'
-
+import { Equal } from 'lucide-react'
+import { NavigationModal } from '../Modal/NavigationModal'
 
 export function NavBar() {
   const [isVisible, setIsVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
+  const [isNavOpen, setIsNavOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,16 +33,17 @@ export function NavBar() {
   }, [lastScrollY])
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50 transition-transform duration-300 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <a href="/" className="font-bold text-2xl">
-          <svg 
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-40 transition-transform duration-300 ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <div className="container mx-auto px-4">
+          <nav className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <a href="/" className="font-bold text-2xl">
+              <svg 
     id="logo" 
     xmlns="http://www.w3.org/2000/svg" 
     viewBox="0 0 64.06 32"
@@ -98,23 +99,35 @@ export function NavBar() {
       transform="matrix(1,0,0,1,-0.25744,0)"
     />
   </svg>
-          </a>
+            </a>
 
-          {/* Navigation Items */}
-          <div className="flex items-center gap-4">
-            <Button variant="outline" className="rounded-full">
-              Login
-            </Button>
-            <button
-              className="p-2 hover:bg-accent rounded-md"
-              aria-label="Toggle menu"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-          </div>
-        </nav>
-      </div>
-    </header>
+            {/* Navigation Items */}
+            <div className="flex items-center gap-2">
+              <button className="button-wrapper rounded-full font-semibold text-lg px-7 py-2 border border-black relative overflow-hidden">
+                <div className="button-text-container">
+                  <span className="button-text">Login</span>
+                  <span className="button-text">Login</span>
+                </div>
+              </button>
+              
+              <button
+                onClick={() => setIsNavOpen(true)}
+                className="button-wrapper rounded-full font-semibold text-lg py-1 px-1 border border-black relative overflow-hidden"
+              >
+                <span className="button-text"><Equal size={30} /></span>
+                <span className="button-text"><Equal size={30} /></span>
+              </button>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      {/* Navigation Modal */}
+      <NavigationModal 
+        isOpen={isNavOpen} 
+        onClose={() => setIsNavOpen(false)} 
+      />
+    </>
   )
 }
 
