@@ -1,26 +1,23 @@
-
-"use client"
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Form, Upload } from "antd";
 import { useState, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
-import { useAppSelector } from "@/redux/Hook/Hook";
 // import { useAppSelector } from "../../Redux/hook";
 
 const ZImageInput = ({ name, label, dragDrop }) => {
   const [imageList, setImageList] = useState([]);
   const { control, resetField } = useFormContext();
-  const { isAddModalOpen, isEditModalOpen } = useAppSelector(
-    (state) => state.modal
-  );
+  // const { isAddModalOpen, isEditModalOpen } = useAppSelector(
+  //   (state) => state.modal
+  // );
 
-  useEffect(() => {
-    if (!isAddModalOpen || !isEditModalOpen) {
-      setImageList([]);
-      resetField(name);
-    }
-  }, [isAddModalOpen, isEditModalOpen]); 
+  // useEffect(() => {
+  //   if (!isAddModalOpen || !isEditModalOpen) {
+  //     setImageList([]);
+  //     resetField(name);
+  //   }
+  // }, [isAddModalOpen, isEditModalOpen]);
 
   const handleChange = (info) => {
     const file = info.file;

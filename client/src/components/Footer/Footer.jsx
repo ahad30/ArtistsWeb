@@ -53,7 +53,7 @@ export function Footer() {
 
             {/* Get Started Card */}
            <div className="flex justify-end">
-           <div className="bg-gray-100 rounded-3xl p-8 space-y-7  w-full lg:w-[80%] text-center">
+           <div className="bg-[#ecf1f4] rounded-3xl p-8 space-y-7  w-full lg:w-[80%] text-center">
               <h3 className="text-3xl font-medium">Let's get started</h3>
               <p className="text-gray-600">
                 We'd love to hear about your project.

@@ -310,3 +310,53 @@
 .modal-open {
   overflow: hidden;
 }
+
+/* Add these styles if not already present */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Add these styles for smooth scrolling */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.smooth-scroll > div > div {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Optional: Add these styles for better touch interaction */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-grab {
+    cursor: default;
+  }
+}
+
+/* Enhanced touch interaction */
+@media (hover: none) and (pointer: coarse) {
+  .smooth-scroll {
+    scroll-snap-type: x mandatory;
+  }
+}
+
+/* Service title hover animation */
+.service-title-hover {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-title-hover:hover {
+  transform: translateX(50%);
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -1,26 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { LanguageContext } from "@/context/LanguageContext";
 import { Form, Input } from "antd";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 const phoneRegex = /^(\+?\d{1,3}[-.\s]?)?(\(?\d{3}\)?[-.\s]?)?[\d-.\s]{7,10}$/;
 
-const ZPhone = ({ name, label, value, placeholder }) => {
-  const { control, setValue } = useFormContext();
-  const { currentLanguage } = useContext(LanguageContext) || { currentLanguage: "en" };
 
-  // Validation messages in multiple languages
-  const validationMessages = {
-    required: {
-      en: "This Phone number field is required",
-      bn: " ফোন নম্বর প্রদান করুন",
-    },
-    pattern: {
-      en: "Invalid phone number format",
-      bn: "ফোন নম্বরের ফর্ম্যাট সঠিক নয়",
-    },
-  };
+const ZPhone = ({ name, label , value}) => {
+  const { control,setValue} = useFormContext();
 
   useEffect(() => {
     if (value) {
@@ -33,10 +20,10 @@ const ZPhone = ({ name, label, value, placeholder }) => {
       name={name}
       control={control}
       rules={{
-        required: validationMessages.required[currentLanguage],
+        required: "Phone number is required",
         pattern: {
           value: phoneRegex,
-          message: validationMessages.pattern[currentLanguage],
+          message: "Invalid phone number format",
         },
       }}
       render={({ field, fieldState: { error } }) => (
@@ -45,7 +32,7 @@ const ZPhone = ({ name, label, value, placeholder }) => {
           validateStatus={error ? "error" : ""}
           help={error?.message}
         >
-          <Input {...field} placeholder={placeholder} />
+          <Input {...field} placeholder="Enter your phone number" />
         </Form.Item>
       )}
     />

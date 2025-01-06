@@ -1,198 +1,96 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import {
-  Card,
-  Typography,
-  List,
-  ListItem,
-  ListItemPrefix,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+import React, { useState, useEffect, useContext } from "react";
+import { Card, Typography } from "@material-tailwind/react";
 import Image from "next/image";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LanguageContext } from "@/context/LanguageContext";
+import Logo from "../../../../public/MpUN8FGwxrTcxR5VTjINTuXxuf4HMKB4b2rxDACf.png";
+import { Menu } from "antd";
 import { HomeContextProvider } from "@/components/HomeProvider/HomeProvider";
-import { IoIosArrowForward } from "react-icons/io";
-import Logo from "../../../../public/MpUN8FGwxrTcxR5VTjINTuXxuf4HMKB4b2rxDACf.png"
-import { Dropdown, Menu } from "antd";
-import { DownOutlined } from '@ant-design/icons';
-
 
 const Dashboard = ({ view, toggle }) => {
-  const [open, setOpen] = useState(null);
   const [activeItem, setActiveItem] = useState();
   const { hamburger, setHamburger } = useContext(HomeContextProvider);
   const pathName = usePathname();
-  const { currentLanguage } = useContext(LanguageContext);
 
-  const adminData = JSON.parse(localStorage.getItem("adminInfo"));
-  const adminPermissions = JSON.parse(adminData?.adminPermissions || "[]");
-
+  // Set active menu item based on current pathname
   useEffect(() => {
     const pathToIdMapping = {
       "/Dashboard/AdminHome": "dashboard",
-      "/Dashboard/Header": "header",
-      "/Dashboard/Faq": "faq",
-      "/Dashboard/HotSpot": "hotSpot",
-      "/Dashboard/HotSpotTwo": "hotSpotTwo",
-      "/Dashboard/BreakingNews": "breakingnews",
-      "/Dashboard/WelcomeSection": "welcomesection",
-      "/Dashboard/FooterSection": "footersection",
-      "/Dashboard/UserGrievance": "userGrievance",
-      "/Dashboard/Content": "content",
-      "/Dashboard/Users": "user",
-      "/Dashboard/admin": "admins",
-      "/Dashboard/UserGrievance/Pending" : "userGrievancePending",
-      "/Dashboard/UserGrievance/Accept" : "userGrievanceAccept",
-      "/Dashboard/UserGrievance/Complete" : "userGrievanceComplete",
-      "/Dashboard/UserGrievance/Reject" : "userGrievanceReject",
-      "/Dashboard/Email" : "email"
-
+      "/Dashboard/Projects": "projects",
+      "/Dashboard/Clients": "clients",
+      "/Dashboard/Team": "team",
+      "/Dashboard/Services": "services",
+      "/Dashboard/Portfolio": "portfolio",
+      "/Dashboard/Blog": "blog",
+      "/Dashboard/Testimonials": "testimonials",
+      "/Dashboard/Settings": "settings",
+      "/Dashboard/Analytics": "analytics",
     };
     setActiveItem(pathToIdMapping[pathName] || "");
   }, [pathName]);
-
-
-  useEffect(() => {
-    const savedOpenState = localStorage.getItem("accordionOpenState");
-    if (savedOpenState) {
-      setOpen(Number(savedOpenState));
-    }
-  }, []);
-
-  const handleAccordionToggle = (value) => {
-    const newValue = open === value ? null : value
-    setOpen(newValue);
-    localStorage.setItem("accordionOpenState", newValue);
-
-  };
-
-
-
-  const getActiveClass = (item) =>
-    activeItem === item && "!bg-[#6c5ce7] text-white border-green-400 border-l-8 !rounded-none";
-
-  const hidden = toggle ? "hidden" : "";
-  const customMenuStyle = {
-    backgroundColor: "#1E466A", 
-  };
-
-  const customItemStyle = {
-    color: "#FFFFFF",            // Custom color for text
-    // padding: "10px",             // Optional: custom padding
-  };
 
   const menuItems = [
     {
       id: "dashboard",
       path: "/Dashboard/AdminHome",
-      // icon: <MdSpaceDashboard className="h-5 w-5 text-white" />,
-      labels: { en: "Dashboard", bn: "ড্যাশবোর্ড" },
+      label: "Dashboard",
     },
     {
-      id: "userGrievance",
-      path: "",
-      // icon: <HiReceiptTax className="h-5 w-5 text-white" />,
-      labels: { en: "Grievances", bn: "অভিযোগ তালিকা" },
-      children: [
-        {
-          id: "userGrievancePending",
-          path: "/Dashboard/UserGrievance/Pending",
-          // icon: <HiReceiptTax className="h-5 w-5 text-white" />,
-          labels: { en: "All Pending", bn: "পেন্ডিং অভিযোগ তালিকা" },
-        },
-        {
-          id: "userGrievanceAccept",
-          path: "/Dashboard/UserGrievance/Accept",
-          // icon: <HiReceiptTax className="h-5 w-5 text-white" />,
-          labels: { en: "All Accepted", bn: "গৃহীত অভিযোগ তালিকা" },
-        },
-        {
-          id: "userGrievanceComplete",
-          path: "/Dashboard/UserGrievance/Complete",
-          // icon: <HiReceiptTax className="h-5 w-5 text-white" />,
-          labels: { en: "All Completed", bn: "সম্পন্ন অভিযোগ তালিকা" },
-        },
-        {
-          id: "userGrievanceReject",
-          path: "/Dashboard/UserGrievance/Reject",
-          // icon: <HiReceiptTax className="h-5 w-5 text-white" />,
-          labels: { en: "All Rejected", bn: "প্রত্যাখ্যান অভিযোগ তালিকা" },
-        },
-      ],
+      id: "projects",
+      path: "/Dashboard/Projects",
+      label: "Projects",
     },
     {
-      id: "user",
-      path: "/Dashboard/Users",
-      // icon: <UserCircleIcon className="h-5 w-5 text-white" />,
-      labels: { en: "User List", bn: "ইউজার তালিকা" },
+      id: "clients",
+      path: "/Dashboard/Clients",
+      label: "Clients",
     },
     {
-      id: "admins",
-      path: "/Dashboard/admin",
-      // icon: <UserCircleIcon className="h-5 w-5 text-white" />,
-      labels: { en: "Admin List", bn: "এডমিন তালিকা" },
+      id: "team",
+      path: "/Dashboard/Team",
+      label: "Team Members",
     },
     {
-      id: "breakingnews",
-      path: "/Dashboard/BreakingNews",
-      // icon: <HiNewspaper className="h-5 w-5 text-white" />,
-      labels: { en: "Breaking News", bn: "ব্রেকিং নিউজ" },
+      id: "services",
+      path: "/Dashboard/Services",
+      label: "Services",
     },
     {
-      id: "welcomesection",
-      path: "/Dashboard/WelcomeSection",
-      // icon: <SiWelcometothejungle className="h-5 w-5 text-white" />,
-      labels: { en: "Welcome Section", bn: "ওয়েলকাম সেকশন" },
+      id: "portfolio",
+      path: "/Dashboard/Portfolio",
+      label: "Portfolio",
     },
     {
-      id: "content",
-      path: "/Dashboard/Content",
-      // icon: <MdContentPaste className="h-5 w-5 text-white" />,
-      labels: { en: "Manage Contents", bn: "কনটেন্ট" },
+      id: "blog",
+      path: "/Dashboard/Blog",
+      label: "Blog Posts",
     },
     {
-      id: "faq",
-      path: "/Dashboard/Faq",
-      // icon: <FaQuoteLeft className="h-5 w-5 text-white" />,
-      labels: { en: "Manage FAQs", bn: "প্রশ্নোত্তর" },
+      id: "testimonials",
+      path: "/Dashboard/Testimonials",
+      label: "Testimonials",
     },
     {
-      id: "header",
-      path: "/Dashboard/Header",
-      // icon: <FaHeading className="h-5 w-5 text-white" />,
-      labels: { en: "Header", bn: "হেডার" },
+      id: "settings",
+      path: "/Dashboard/Settings",
+      label: "Settings",
     },
     {
-      id: "hotSpot",
-      path: "/Dashboard/HotSpot",
-      // icon: <RiHotspotFill className="h-5 w-5 text-white" />,
-      labels: { en: "HotSpot One", bn: "হটস্পট ওয়ান" },
-    },
-    {
-      id: "hotSpotTwo",
-      path: "/Dashboard/HotSpotTwo",
-      // icon: <RiHotspotFill className="h-5 w-5 text-white" />,
-      labels: { en: "HotSpot Two", bn: "হটস্পট টু" },
-    },
-    {
-      id: "email",
-      path: "/Dashboard/Email",
-      // icon: <RiHotspotFill className="h-5 w-5 text-white" />,
-      labels: { en: "Email", bn: "ই-মেইল" },
-    },
-    {
-      id: "footersection",
-      path: "/Dashboard/FooterSection",
-      // icon: <InboxIcon className="h-5 w-5 text-white" />,
-      labels: { en: "Footer Section", bn: "ফুটার সেকশন" },
+      id: "analytics",
+      path: "/Dashboard/Analytics",
+      label: "Analytics",
     },
   ];
-  
+
+  const customMenuStyle = {
+    backgroundColor: "#1E466A",
+  };
+
+  const customItemStyle = {
+    color: "#FFFFFF",
+  };
 
   return (
     <div
@@ -200,19 +98,102 @@ const Dashboard = ({ view, toggle }) => {
         hamburger ? "left-0" : "left-[-30rem]"
       } md:left-0 z-[30] transition-all duration-500`}
     >
-    <Card className="h-screen no-scrollbar overflow-y-scroll py-2 shadow-xl shadow-blue-gray-900/5 bg-primary rounded-none">
+      <Card className="h-screen no-scrollbar overflow-y-scroll py-2 shadow-xl shadow-blue-gray-900/5 bg-primary rounded-none">
         <div className="flex items-center justify-between">
           <div className="mb-2 mt-3 pl-5">
             <Typography variant="h5" color="white">
-              {!toggle ? (
-                <Image src={Logo} alt="Admin" className="w-[100px] h-[50px]" />
-              ) : (
-                <Image
-                  src={Logo}
-                  alt="Admin"
-                  className="w-[40px] h-[25px] mt-1 object-cover"
-                />
-              )}
+              <a href="/" className="font-bold text-2xl">
+                <svg
+                  id="logo"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64.06 32"
+                  width={64}
+                  height={32}
+                  className=" text-white"
+                >
+                  <rect
+                    id="line1"
+                    x="12.31"
+                    width="6.78"
+                    height="32"
+                    strokeWidth="0"
+                    style={{
+                      translate: "none",
+                      rotate: "none",
+                      scale: "none",
+                      transformOrigin: "0px 0px",
+                    }}
+                    transform="matrix(1,0,0,1,0,0)"
+                  />
+                  <polygon
+                    id="angle1"
+                    points="0 32 6.78 32 12.31 0 5.53 0 0 32"
+                    strokeWidth="0"
+                    style={{
+                      translate: "none",
+                      rotate: "none",
+                      scale: "none",
+                      transformOrigin: "0px 0px",
+                      visibility: "visible",
+                    }}
+                    transform="matrix(1,0,0,1,0,0)"
+                  />
+                  <rect
+                    id="line2"
+                    x="25.88"
+                    width="6.78"
+                    height="32"
+                    strokeWidth="0"
+                    style={{
+                      translate: "none",
+                      rotate: "none",
+                      scale: "none",
+                      transformOrigin: "0px 0px",
+                    }}
+                    transform="matrix(1,0,0,1,0,0)"
+                  />
+                  <polygon
+                    id="angle2"
+                    points="32.66 32 39.44 32 44.97 0 38.19 0 32.66 32"
+                    strokeWidth="0"
+                    style={{
+                      translate: "none",
+                      rotate: "none",
+                      scale: "none",
+                      transformOrigin: "0px 0px",
+                      visibility: "visible",
+                    }}
+                    transform="matrix(1,0,0,1,-0.25744,0)"
+                  />
+                  <rect
+                    id="line3"
+                    x="44.97"
+                    width="6.78"
+                    height="32"
+                    strokeWidth="0"
+                    style={{
+                      translate: "none",
+                      rotate: "none",
+                      scale: "none",
+                      transformOrigin: "0px 0px",
+                    }}
+                    transform="matrix(1,0,0,1,0,0)"
+                  />
+                  <polygon
+                    id="angle3"
+                    points="57.28 0 51.75 32 58.53 32 64.06 0 57.28 0"
+                    strokeWidth="0"
+                    style={{
+                      translate: "none",
+                      rotate: "none",
+                      scale: "none",
+                      transformOrigin: "0px 0px",
+                      visibility: "visible",
+                    }}
+                    transform="matrix(1,0,0,1,-0.25744,0)"
+                  />
+                </svg>
+              </a>
             </Typography>
           </div>
           {view === "mobile" && hamburger && (
@@ -227,28 +208,20 @@ const Dashboard = ({ view, toggle }) => {
           )}
         </div>
 
-        {/* Replace Dropdown with Menu here */}
         <Menu
-         className="custom-menu"
+          className="custom-menu"
           style={customMenuStyle}
           mode="inline"
           selectedKeys={[activeItem]}
           onClick={(e) => setActiveItem(e.key)}
-          items={ menuItems.map(item =>
-            adminPermissions.includes(item.id) ?
-            ({
+          items={menuItems.map((item) => ({
             key: item.id,
-            label: <Link href={item.path}>
-             <span style={customItemStyle}> {currentLanguage === "en" ? item.labels.en : item.labels.bn}</span>
-              </Link>,
-            icon: item.icon,
-            children: item.children?.map(child => ({
-              key: child.id,
-              label: <Link href={child.path}>
-              <span style={customItemStyle}>  {currentLanguage === "en" ? child.labels.en : child.labels.bn}</span>
-                </Link>,
-            })),
-          }) : null)}
+            label: (
+              <Link href={item.path}>
+                <span style={customItemStyle}>{item.label}</span>
+              </Link>
+            ),
+          }))}
         />
       </Card>
     </div>

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
-const UserModel = require('./models/User'); // Import the User model
+const UserModel = require('./models/User'); 
 
 dotenv.config();
 const app = express();
@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 const corsOptions = {
   origin: [
-    "http://localhost:5173",
+    "http://localhost:3000",
   ],
   credentials: true,
   optionSuccessStatus: 200,
@@ -67,7 +67,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Login route
-app.post('/login', async (req, res) => {
+app.post('/admin/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -86,7 +86,7 @@ app.post('/login', async (req, res) => {
     }
 
     res.status(200).json({
-      message: 'Login successful.',
+      message: 'AdminLogin successful.',
       user: {
         id: user._id,
         name: user.name,

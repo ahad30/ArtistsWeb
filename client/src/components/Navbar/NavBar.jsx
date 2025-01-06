@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Equal } from 'lucide-react'
 import { NavigationModal } from '../Modal/NavigationModal'
+import Link from 'next/link'
 
 export function NavBar() {
   const [isVisible, setIsVisible] = useState(true)
@@ -103,12 +104,14 @@ export function NavBar() {
 
             {/* Navigation Items */}
             <div className="flex items-center gap-2">
+                  <Link href="/Login">
               <button className="button-wrapper rounded-full font-semibold text-lg px-7 py-2 border border-black relative overflow-hidden">
                 <div className="button-text-container">
                   <span className="button-text">Login</span>
                   <span className="button-text">Login</span>
                 </div>
               </button>
+                  </Link>
               
               <button
                 onClick={() => setIsNavOpen(true)}

@@ -3,22 +3,24 @@ import { Form, Radio } from "antd";
 import { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
-const ZRadio = ({ name, label, options, defaultValue, onChange }) => {
+const ZRadio = ({ name, label, options, defaultValue, setProductType}) => {
   const { control } = useFormContext();
-  const [value, setValue] = useState(defaultValue || "");
+  const [value, setValue] = useState("");
   const { isEditModalOpen } = useAppSelector((state) => state.modal);
 
-  const handleRadioChange = (e) => {
-    const selectedValue = e.target.value;
-    setValue(selectedValue);
-    if (onChange) onChange(selectedValue);
+  const onChange = (value) => {
+    // console.log(value)
+    setValue(value);
+    if (setProductType) {
+      setProductType(value);
+    }
   };
 
   useEffect(() => {
     if (defaultValue || isEditModalOpen) {
       setValue(defaultValue);
     }
-  }, [defaultValue, isEditModalOpen]);
+  }, [defaultValue]);
 
   return (
     <Controller
@@ -32,16 +34,15 @@ const ZRadio = ({ name, label, options, defaultValue, onChange }) => {
         >
           <Radio.Group
             {...field}
-            value={value}
             onChange={(e) => {
-              handleRadioChange(e);
+              onChange(e.target.value);
               field.onChange(e.target.value);
             }}
-             {...(defaultValue ? { value: value } : {})}
+            {...(defaultValue ? { value: value } : {})}
           >
             {options.map((item) => (
               <Radio key={item.value} value={item.value}>
-                {item.label}
+                {item.name}
               </Radio>
             ))}
           </Radio.Group>

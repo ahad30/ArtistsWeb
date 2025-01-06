@@ -10,8 +10,7 @@ const ZInputTextArea = ({
     value,
     placeholder,
     reset,
-    required,
-    onSelectChange
+    required
 }) => {
     const { control, setValue, resetField } = useFormContext();
     const { isEditModalOpen } = useAppSelector(
@@ -45,17 +44,7 @@ const ZInputTextArea = ({
                     validateStatus={error ? "error" : ""}
                     help={error?.message}
                 >
-                    <Input.TextArea 
-                    {...field} 
-                    placeholder={placeholder}  
-                   rows={10}
-                    onChange={(e) => {
-                        field.onChange(e); // Update React Hook Form's state
-                        if (onSelectChange) {
-                          onSelectChange(e.target.value); // Call the onSelectChange handler
-                        }
-                      }}
-                    />
+                    <Input.TextArea {...field} placeholder={placeholder}  rows={10}/>
                 </Form.Item>
             )}
         />

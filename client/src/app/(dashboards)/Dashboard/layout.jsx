@@ -1,24 +1,22 @@
 "use client"
 import React, { useContext, useState } from 'react'
 import "../../globals.css";
-import HomeProvider, { HomeContextProvider } from '@/components/HomeProvider/HomeProvider';
 import Dashboard from '@/app/(dashboards)/Dashboard/Dashboard';
 import Navbar from '@/app/(dashboards)/Dashboard/Navbar/Navbar';
-import { usePathname } from 'next/navigation';
-import { LanguageContextProvider } from '@/context/LanguageContext';
+
+import HomeProvider, { HomeContextProvider } from '@/components/HomeProvider/HomeProvider';
 
 const DashboardLayout = ({ children }) => {
   const [toggle, setToggle] = useState(false);
   const { hamburger } = useContext(HomeContextProvider);
-  const pathName = usePathname()
+
 
   const handleClick = () => {
     setToggle(!toggle);
   }
   return (
     <>
-      <LanguageContextProvider>
-
+    
         <HomeProvider>
           <div className="overflow-y-hidden overflow-x-hidden">
             <div className="md:flex md:flex-row justify-start h-screen relative">
@@ -26,7 +24,7 @@ const DashboardLayout = ({ children }) => {
                 className={`${toggle ? "max-w-[4.5%]" : "w-[20%]"
                   }  duration-500 transition`}
               >
-                <Dashboard toggle={toggle} />
+                <Dashboard />
 
               </div>
 
@@ -48,7 +46,7 @@ const DashboardLayout = ({ children }) => {
             </div>
           </div>
         </HomeProvider>
-      </LanguageContextProvider>
+ 
 
     </>
   )

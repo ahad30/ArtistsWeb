@@ -10,19 +10,10 @@ const ButtonWithModal = ({
   path,
   back
 }) => {
-  const { currentLanguage } = useContext(LanguageContext) || {
-    currentLanguage: "en",
-  };
-
-  // Map English titles to Bengali equivalents
-  const bnTitleMap = {
-    Back: "ব্যাক",
-
-  };
+ 
 
   // Get the translated title based on the current language
-  const translatedTitle =
-    currentLanguage === "bn" ? bnTitleMap[title] || title : title;
+
 
 
 
@@ -35,11 +26,11 @@ const ButtonWithModal = ({
       {
      back ? (
     <>
-      <FaBackward /> {translatedTitle}
+      <FaBackward /> {title}
     </>
   ) : (
     <>
-      <FaPlus /> {translatedTitle}
+      <FaPlus /> {title}
     </>
   )
 }
@@ -51,7 +42,7 @@ const ButtonWithModal = ({
       onClick={() => dispatch(setIsAddModalOpen())}
       className="bg-[#24354C] flex justify-center  items-center gap-2  text-center text-white w-full px-2 lg:px-0 py-2 lg:py-0 lg:w-[200px] lg:h-[45px] rounded-md"
     >
-      <FaPlus /> {translatedTitle}
+      <FaPlus /> {title}
     </button>
   );
 };

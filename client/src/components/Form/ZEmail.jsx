@@ -1,28 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
-import { LanguageContext } from "@/context/LanguageContext";
 import { Form, Input } from "antd";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const ZEmail = ({ name, label, value, placeholder ,required}) => {
+const ZEmail = ({ name, label, value }) => {
   const { control, setValue } = useFormContext();
-  const { currentLanguage } = useContext(LanguageContext) || { currentLanguage: "en" };
-
-
-
-  const validationMessages = {
-    required: {
-      en: "This email field is required",
-      bn: " ইমেইল প্রদান করুন",
-    },
-    pattern: {
-      en: "Invalid email format",
-      bn: "ইমেইল ফর্ম্যাট সঠিক নয়",
-    },
-  };
 
   useEffect(() => {
     if (value) {
@@ -35,10 +20,10 @@ const ZEmail = ({ name, label, value, placeholder ,required}) => {
       name={name}
       control={control}
       rules={{
-      ...( required && { required: validationMessages.required[currentLanguage]} ),
+        required: "Email is required",
         pattern: {
           value: emailRegex,
-          message: validationMessages.pattern[currentLanguage],
+          message: "Invalid email format",
         },
       }}
       render={({ field, fieldState: { error } }) => (
@@ -47,7 +32,7 @@ const ZEmail = ({ name, label, value, placeholder ,required}) => {
           validateStatus={error ? "error" : ""}
           help={error?.message}
         >
-          <Input {...field} placeholder={placeholder} />
+          <Input {...field} placeholder="Enter your email" />
         </Form.Item>
       )}
     />

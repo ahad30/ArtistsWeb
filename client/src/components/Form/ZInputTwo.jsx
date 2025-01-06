@@ -1,9 +1,8 @@
 "use client";
-import { LanguageContext } from "@/context/LanguageContext";
-import { useAppSelector } from "@/redux/Hook/Hook";
 import { Form, Input } from "antd";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { useAppSelector } from "../../redux/Hook/Hook";
 
 const ZInputTwo = ({
   name,
@@ -14,12 +13,10 @@ const ZInputTwo = ({
   placeholder,
   required,
   reset,
-  onSelectChange, // Add this prop
+  onChange,
 }) => {
   const { control, setValue, resetField } = useFormContext();
   const { isEditModalOpen } = useAppSelector((state) => state.modal);
-  const { currentLanguage, setCurrentLanguage } = useContext(LanguageContext);
-
 
   useEffect(() => {
     if (value) {
@@ -40,8 +37,7 @@ const ZInputTwo = ({
       name={name}
       control={control}
       rules={{
-        ...(required && currentLanguage =="en" ? { required: `This ${label} field is required`} : 
-            (required && currentLanguage =="bn" && { required: `${label} প্রদান করুন`})),
+        ...(required && { required: `This ${label} field is required` }),
       }}
       render={({ field, fieldState: { error } }) => (
         <Form.Item
@@ -55,9 +51,10 @@ const ZInputTwo = ({
             type={type}
             placeholder={placeholder}
             onChange={(e) => {
-              field.onChange(e); // Update React Hook Form's state
-              if (onSelectChange) {
-                onSelectChange(e.target.value); // Call the onSelectChange handler
+              // Merge custom onChange with field's default onChange
+              field.onChange(e);
+              if (onChange) {
+                onChange(e);
               }
             }}
           />
