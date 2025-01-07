@@ -1,13 +1,17 @@
 "use client"
 import React from 'react'
-import { Hero } from "@/components/Hero/Hero";
-import { Services } from "@/components/Services/Services";
+import { Hero } from "./Hero/Hero";
+import { Services } from "./Services/Services";
 import { NavBar } from '@/components/Navbar/NavBar'
 import { Footer } from '@/components/Footer/Footer'
 import { Work } from './Work/Work';
+import { Partner } from './Partner/Partner';
+import { Team } from './Team/Team';
 import Testimonial from './Testimonial/Testimonial';
-
-
+import ScrollText from './ScrollText/ScrollText';
+import Goals from './Goals/Goals';
+import Banner from './Banner/Banner';
+import ServicesOverview from './ServicesOverview/ServicesOverview';
 
 const Home = () => {
   return (
@@ -18,7 +22,13 @@ const Home = () => {
       <Hero/>
       <Work/>
       <Services/>
-      {/* <Testimonial/> */}
+      <Partner/>
+      <Team/>
+      <ScrollText/>
+      <Goals/>    
+      <Banner/>
+      <ServicesOverview/>
+      <Testimonial/>
       <Footer/>
     </section>
   )

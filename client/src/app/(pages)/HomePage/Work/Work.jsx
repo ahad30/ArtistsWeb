@@ -1,9 +1,8 @@
 "use client";
-
+import { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
 
 const workItems = [
   {
@@ -50,59 +49,53 @@ const workItems = [
 
 export function Work() {
   const containerRef = useRef(null);
-  const [width, setWidth] = useState(0);
 
-  // useEffect(() => {
-  //   const updateWidth = () => {
-  //     const scrollWidth = containerRef.current.scrollWidth;
-  //     const viewportWidth = containerRef.current.offsetWidth;
-  //     setWidth(scrollWidth - viewportWidth);
-  //   };
-
-  //   updateWidth();
-  //   window.addEventListener('resize', updateWidth);
-  //   return () => window.removeEventListener('resize', updateWidth);
-  // }, []);
-
-  const { scrollYProgress } = useScroll({ target: containerRef });
+  // Use the newer ref pattern with Framer Motion
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    // offset: ["start end", "end start"]
+  });
 
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-55%"]);
 
   return (
-    <section className="h-[300vh] container mx-auto mb-16 mt-16" ref={containerRef}>
+    <motion.section 
+      ref={containerRef}
+      className="h-[300vh] mb-16 mt-16"
+    >
       <div className="overflow-hidden mx-auto flex items-center justify-start px-4 sticky top-0 
       h-[100vh]">
-     
-
-        {/* Horizontal Scrolling Section */}
         <motion.div className="flex gap-6" style={{ x }}>
-             {/* Header Section */}
-        <motion.div className="flex flex-col">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-4">
-              <h2 className="text-6xl font-semibold">Work</h2>
-              <div className="bg-white text-black border border-gray-300  w-[70px] h-[70px] rounded-full flex items-center justify-center">
-                <span className="text-lg">13</span>
+          {/* Header Section */}
+          <motion.div  className="min-w-[500px] ml-14 flex flex-col h-[450px] relative"
+          >
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <h2 className="text-6xl font-semibold">Work</h2>
+                <div className="bg-white text-black border border-gray-300 w-[70px] h-[70px] rounded-full flex items-center justify-center">
+                  <span className="text-lg">13</span>
+                </div>
               </div>
             </div>
-          
-          </div>
-          <p className="text-2xl text-gray-600 max-w-[600px]">
-            A selection of our crafted work, built from scratch by our talented in-house team.
-          </p>
-          <Link 
-              href="/case-studies"
-              className="w-[100%] text-center px-8 py-4 rounded-full border border-black hover:bg-black hover:text-white transition-colors mt-20"
+            <p className="text-2xl text-black text-justify w-[300px]">
+              A selection of our crafted work, built from scratch by our talented in-house team.
+            </p>
+          <div className="w-[300px]">
+          <button 
+              className="text-center px-8 py-4 rounded-full border border-black hover:bg-black hover:text-white transition-colors absolute bottom-0"
             >
               Case Studies
-            </Link>
-        </motion.div>
+            </button>
+          </div>
+          </motion.div>
+
+          {/* Work Items */}
           {workItems.map((item) => (
             <motion.div
               key={item.id}
-              className="min-w-[600px] h-[400px]  relative rounded-3xl flex-shrink-0"
+              className="min-w-[600px] h-[450px] relative rounded-3xl flex-shrink-0"
               initial={{ opacity: 0, y: 150 }}
-              whileInView={{ opacity: 1, y: 0, threshold: 0.99 }}
+              whileInView={{ opacity: 1, y: 0 }}  
               transition={{ duration: 0.5, ease: "easeInOut" }}
             >
               <Link href={item.link}>
@@ -111,12 +104,12 @@ export function Work() {
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover"
+                    className="object-cover rounded-3xl"
                     priority
                   />
 
                   {/* Content Overlay */}
-                  <div className="absolute inset-0 p-8 flex flex-col justify-between bg-black">
+                  <div className="absolute inset-0 p-8 flex flex-col justify-between bg-black/50 rounded-3xl">
                     {/* Latest Badge */}
                     {item.isLatest && (
                       <div className="self-end">
@@ -127,10 +120,8 @@ export function Work() {
                     )}
 
                     {/* Bottom Content */}
-                    <div className="text-white bottom-0 absolute py-10">
-                      <h3 className="text-3xl font-semibold mb-4">
-                        {item.title}
-                      </h3>
+                    <div className="absolute bottom-0 py-8 text-white">
+                      <h3 className="text-3xl font-semibold mb-4">{item.title}</h3>
                       <div className="flex gap-3">
                         {item.tags.map((tag, index) => (
                           <span
@@ -150,10 +141,7 @@ export function Work() {
 
           {/* View More Card */}
           <motion.div
-            initial={{ opacity: 0, y: 150 }}
-            whileInView={{ opacity: 1, y: 0, threshold: 0.99 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="min-w-[400px] h-[600px] flex-shrink-0 flex flex-col items-center justify-center gap-6"
+            className="min-w-[500px] ms-[300px] h-[400px] flex flex-col items-center justify-start gap-6"
           >
             <h3 className="text-4xl font-semibold">View More</h3>
             <Link
@@ -165,6 +153,6 @@ export function Work() {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -6,10 +6,10 @@ const nextConfig = {
       // your project has ESLint errors.
       ignoreDuringBuilds: true,
     },
-    // serverExternalPackages: ['@acme/ui'],
-    experimental: {
-    serverComponentsExternalPackages: ['@acme/ui']
-  },
+    serverExternalPackages: ['@acme/ui'],
+  //   experimental: {
+  //   serverComponentsExternalPackages: ['@acme/ui']
+  // },
   webpack: (config) => {
     config.module.rules.push({
         test: /\.ttf$/,
