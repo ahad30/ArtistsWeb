@@ -1,10 +1,13 @@
 "use client"
 import React from 'react'
 import { Hero } from "@/components/Hero/Hero";
-import { Work } from "@/components/Work/Work";
 import { Services } from "@/components/Services/Services";
 import { NavBar } from '@/components/Navbar/NavBar'
 import { Footer } from '@/components/Footer/Footer'
+import { Work } from './Work/Work';
+import Testimonial from './Testimonial/Testimonial';
+
+
 
 const Home = () => {
   return (
@@ -15,6 +18,7 @@ const Home = () => {
       <Hero/>
       <Work/>
       <Services/>
+      {/* <Testimonial/> */}
       <Footer/>
     </section>
   )
