@@ -75,7 +75,7 @@ export function Testimonials() {
               {testimonials.map((testimonial) => (
                 <motion.div
                   key={testimonial.id}
-                  className="bg-gradient-to-r from-gray-900 to-gray-800 p-8 rounded-3xl h-[400px]"
+                  className="bg-gradient-to-r from-gray-900 to-gray-800 p-8  rounded-3xl"
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, ease: "easeInOut" }}
@@ -99,7 +99,7 @@ export function Testimonials() {
                         <h4 className="font-medium text-lg">{testimonial.author}</h4>
                       </div>
                     </div>
-                    <p className="text-blue-400">{testimonial.company}</p>
+                    <p className="text-blue-400 ">{testimonial.company}</p>
                   </div>
                 </motion.div>
               ))}

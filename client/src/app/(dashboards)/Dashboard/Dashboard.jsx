@@ -5,7 +5,6 @@ import Image from "next/image";
 import { RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Logo from "../../../../public/MpUN8FGwxrTcxR5VTjINTuXxuf4HMKB4b2rxDACf.png";
 import { Menu } from "antd";
 import { HomeContextProvider } from "@/components/HomeProvider/HomeProvider";
 

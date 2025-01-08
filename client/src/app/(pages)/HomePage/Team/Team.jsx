@@ -16,13 +16,13 @@ export function Team() {
     <section className="" >
       {/* Parallax Image Section */}
       <motion.div 
-        className="mx-auto"
+        className="px-16"
       >
         <Image
           src={TeamImage}
           alt="Our Team"
           
-          className="object-cover mx-auto lg:w-[1150px] lg:h-[500px] rounded-xl"
+          className="object-cover mx-auto lg:w-[1200px] lg:h-[500px] rounded-xl"
           
         />
       </motion.div>

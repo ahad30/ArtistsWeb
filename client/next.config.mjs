@@ -7,9 +7,10 @@ const nextConfig = {
       ignoreDuringBuilds: true,
     },
     serverExternalPackages: ['@acme/ui'],
-  //   experimental: {
-  //   serverComponentsExternalPackages: ['@acme/ui']
-  // },
+    images: {
+    domains: ['i.ibb.co'],
+  },
+
   webpack: (config) => {
     config.module.rules.push({
         test: /\.ttf$/,

@@ -7,7 +7,6 @@ import { Footer } from '@/components/Footer/Footer'
 import { Work } from './Work/Work';
 import { Partner } from './Partner/Partner';
 import { Team } from './Team/Team';
-import Testimonial from './Testimonial/Testimonial';
 import ScrollText from './ScrollText/ScrollText';
 import Goals from './Goals/Goals';
 import Banner from './Banner/Banner';
@@ -29,7 +28,6 @@ const Home = () => {
       <Goals/>    
       <Banner/>
       <ServicesOverview/>
-      {/* <Testimonial/> */}
       <Testimonials />
       <Footer/>
     </section>

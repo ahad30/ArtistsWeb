@@ -1,5 +1,4 @@
 
-import { LanguageContext } from "@/context/LanguageContext";
 import { useAppDispatch } from "@/redux/Hook/Hook";
 import { setIsAddModalOpen } from "@/redux/Modal/ModalSlice";
 import Link from "next/link";
