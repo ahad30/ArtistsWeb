@@ -12,6 +12,7 @@ import ScrollText from './ScrollText/ScrollText';
 import Goals from './Goals/Goals';
 import Banner from './Banner/Banner';
 import ServicesOverview from './ServicesOverview/ServicesOverview';
+import { Testimonials } from './Testimonials/Testimonials'
 
 const Home = () => {
   return (
@@ -28,7 +29,8 @@ const Home = () => {
       <Goals/>    
       <Banner/>
       <ServicesOverview/>
-      <Testimonial/>
+      {/* <Testimonial/> */}
+      <Testimonials />
       <Footer/>
     </section>
   )
