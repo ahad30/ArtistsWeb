@@ -9,6 +9,10 @@ export const tags = [
     name: 'projects', 
     tag: 'Projects', 
   },
+  {
+    name: 'testimonials', 
+    tag: 'Testimonials', 
+  },
 
 
 

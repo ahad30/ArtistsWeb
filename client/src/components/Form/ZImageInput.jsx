@@ -5,7 +5,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
 import { useAppSelector } from "@/redux/Hook/Hook";
 
-const ZImageInput = ({ name, label, dragDrop, defaultValue }) => {
+const ZImageInput = ({ name, label, dragDrop, defaultValue, onRemove }) => {
   const [imageList, setImageList] = useState([]);
   const { control, resetField } = useFormContext();
   const { isAddModalOpen, isEditModalOpen } = useAppSelector(
@@ -72,6 +72,7 @@ const ZImageInput = ({ name, label, dragDrop, defaultValue }) => {
             onRemove={() => {
               setImageList([]);
               onChange(null);
+              if (onRemove) onRemove(); // Call the onRemove callback if provided
             }}
             maxCount={1}
             onChange={handleChange}

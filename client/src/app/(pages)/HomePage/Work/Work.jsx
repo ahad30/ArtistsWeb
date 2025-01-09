@@ -8,7 +8,7 @@ import { Spin } from "antd";
 
 export function Work() {
   const containerRef = useRef(null);
-  const { data: projects, isLoading } = useGetProjectsQuery();
+  const { data: projects, isLoading , error} = useGetProjectsQuery();
 
   // Use the newer ref pattern with Framer Motion
   const { scrollYProgress } = useScroll({
@@ -21,6 +21,14 @@ export function Work() {
     return (
       <div className="h-screen flex items-center justify-center">
         <Spin size="large" />
+      </div>
+    );
+  }
+
+  if(projects?.length === 0 || error){
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <h1 className="text-4xl font-semibold">No Projects Found</h1>
       </div>
     );
   }

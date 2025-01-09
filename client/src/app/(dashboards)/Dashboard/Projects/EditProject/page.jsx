@@ -1,25 +1,25 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import ZFormTwo from "@/components/Form/ZFormTwo";
-import ZInputTextArea from "@/components/Form/ZInputTextArea";
+import ZInputTwo from "@/components/Form/ZInputTwo";
 import { useAppDispatch } from "@/redux/Hook/Hook";
 import { setIsEditModalOpen } from "@/redux/Modal/ModalSlice";
 import { useUpdateProjectMutation } from "@/redux/Feature/Admin/projects/projects";
 import ZSelect from "@/components/Form/ZSelect";
 import ZImageInput from "@/components/Form/ZImageInput";
 import axios from "axios";
-import ZInputTwo from "@/components/Form/ZInputTwo";
+import ZInputTextArea from "@/components/Form/ZInputTextArea";
+import { toast } from "sonner";
 
 const EditProject = ({ selectedProject }) => {
-console.log(selectedProject)
   const dispatch = useAppDispatch();
+  const [currentImage, setCurrentImage] = useState(selectedProject?.image);
   const [updateProject, { isLoading, isError, error, isSuccess, data }] = useUpdateProjectMutation();
 
   const handleSubmit = async (formData) => {
     try {
-      let imageUrl = selectedProject.image;
+      let imageUrl = currentImage;
 
-      // Only upload new image if it's changed
       if (formData.image) {
         const image_hosting_key = process.env.NEXT_PUBLIC_HOSTING_KEY;
         const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -27,15 +27,16 @@ console.log(selectedProject)
         const imageFile = new FormData();
         imageFile.append('image', formData.image);
         
-        const res = await axios.post(image_hosting_api, imageFile, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        });
+        const res = await axios.post(image_hosting_api, imageFile);
 
         if (res?.data?.success) {
           imageUrl = res.data.data.display_url;
         }
+      }
+
+      if (!imageUrl && !formData.image) {
+        toast.error('Project image is required');
+        return;
       }
 
       const projectData = {
@@ -50,11 +51,16 @@ console.log(selectedProject)
       updateProject({ id: selectedProject.id, data: projectData });
     } catch (error) {
       console.error('Error uploading image:', error);
+      toast.error('Error updating project. Please try again.');
     }
   };
 
   const handleCloseModal = () => {
     dispatch(setIsEditModalOpen());
+  };
+
+  const handleImageRemove = () => {
+    setCurrentImage(null);
   };
 
   return (
@@ -92,21 +98,21 @@ console.log(selectedProject)
           <ZImageInput
             name="image"
             label="Project Image"
-            defaultValue={selectedProject?.image ? [
+            defaultValue={currentImage ? [
               {
                 uid: '-1',
                 name: 'Current Image',
                 status: 'done',
-                url: selectedProject?.image,
+                url: currentImage,
               },
             ] : []}
+            onRemove={handleImageRemove}
           />
           <ZSelect
             name="tags"
             label="Tags"
             mode="multiple"
             value={selectedProject?.tags}
-            placeholder="Add tags"
             options={[
               { label: "UI/UX Design", value: "UI/UX Design" },
               { label: "Development", value: "Development" },
@@ -114,6 +120,7 @@ console.log(selectedProject)
               { label: "Digital Product", value: "Digital Product" },
               { label: "Property Portal", value: "Property Portal" },
             ]}
+            placeholder="Add tags"
           />
           <ZSelect
             name="isLatest"

@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 const UserModel = require('./models/User');
 const ProjectModel = require('./models/Project');
+const TestimonialModel = require('./models/Testimonial');
 
 dotenv.config();
 const app = express();
@@ -208,7 +209,92 @@ app.delete('/projects/:id', async (req, res) => {
   }
 });
 
+// Create testimonial
+app.post('/testimonials', async (req, res) => {
+  try {
+    const { companyName, description, authorName, profileImage } = req.body;
 
+    if (!companyName || !description || !authorName || !profileImage) {
+      return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    const newTestimonial = new TestimonialModel({
+      companyName,
+      description,
+      authorName,
+      profileImage
+    });
+
+    await newTestimonial.save();
+    res.status(201).json({ 
+      message: 'Testimonial created successfully.',
+      testimonial: newTestimonial 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Get all testimonials
+app.get('/testimonials', async (req, res) => {
+  try {
+    const testimonials = await TestimonialModel.find().sort({ createdAt: -1 });
+    res.status(200).json(testimonials);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Update testimonial
+app.put('/testimonials/:id', async (req, res) => {
+  try {
+    const { companyName, description, authorName, profileImage } = req.body;
+    
+    const updatedTestimonial = await TestimonialModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        companyName,
+        description,
+        authorName,
+        profileImage
+      },
+      { new: true }
+    );
+
+    if (!updatedTestimonial) {
+      return res.status(404).json({ message: 'Testimonial not found.' });
+    }
+
+    res.status(200).json({ 
+      message: 'Testimonial updated successfully.',
+      testimonial: updatedTestimonial 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Delete testimonial
+app.delete('/testimonials/:id', async (req, res) => {
+  try {
+    const deletedTestimonial = await TestimonialModel.findByIdAndDelete(req.params.id);
+    
+    if (!deletedTestimonial) {
+      return res.status(404).json({ message: 'Testimonial not found.' });
+    }
+
+    res.status(200).json({ 
+      message: 'Testimonial deleted successfully.',
+      testimonial: deletedTestimonial 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
 
 // Start server
 app.listen(port, () => {
