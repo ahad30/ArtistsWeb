@@ -8,16 +8,8 @@ const nextConfig = {
     },
     serverExternalPackages: ['@acme/ui'],
     images: {
-    domains: ['i.ibb.co'],
-  },
-
-  webpack: (config) => {
-    config.module.rules.push({
-        test: /\.ttf$/,
-        type: 'asset/resource',
-    });
-    return config;
-},
+    domains: ['i.ibb.co.com'],
+  }
     
 };
 

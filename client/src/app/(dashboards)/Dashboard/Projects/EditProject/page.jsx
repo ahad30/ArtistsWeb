@@ -13,12 +13,11 @@ import { toast } from "sonner";
 
 const EditProject = ({ selectedProject }) => {
   const dispatch = useAppDispatch();
-  const [currentImage, setCurrentImage] = useState(selectedProject?.image);
   const [updateProject, { isLoading, isError, error, isSuccess, data }] = useUpdateProjectMutation();
 
   const handleSubmit = async (formData) => {
     try {
-      let imageUrl = currentImage;
+      let imageUrl = selectedProject?.image;
 
       if (formData.image) {
         const image_hosting_key = process.env.NEXT_PUBLIC_HOSTING_KEY;
@@ -59,9 +58,6 @@ const EditProject = ({ selectedProject }) => {
     dispatch(setIsEditModalOpen());
   };
 
-  const handleImageRemove = () => {
-    setCurrentImage(null);
-  };
 
   return (
     <div>
@@ -98,15 +94,15 @@ const EditProject = ({ selectedProject }) => {
           <ZImageInput
             name="image"
             label="Project Image"
-            defaultValue={currentImage ? [
+            defaultValue={selectedProject?.image ? [
               {
                 uid: '-1',
                 name: 'Current Image',
                 status: 'done',
-                url: currentImage,
+                url: selectedProject?.image,
               },
             ] : []}
-            onRemove={handleImageRemove}
+
           />
           <ZSelect
             name="tags"

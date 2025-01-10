@@ -1,16 +1,27 @@
 "use client";
 
+import { useGetPartnerGoalsQuery } from "@/redux/Feature/Admin/partnerGoals/partnerGoals";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 const Banner = () => {
+  const {data: partnerGoals, isLoading: partnerGoalsLoading, error: partnerGoalsError} = useGetPartnerGoalsQuery();
+  const partnerData = partnerGoals?.filter(partner => partner.selectLayout === "Banner");
+  console.log(partnerData);
+  if(partnerGoalsLoading){
+    return <div>Loading...</div>
+  }
+
+  if(partnerGoals === 0 || partnerGoalsError){
+    return <div>No Banner Found</div>
+  }
   return (
     <section className="relative h-screen overflow-hidden">
-      {/* Background with diagonal stripes */}
+
       <div className="absolute inset-0 bg-[#f5f5f5]">
         <div className="absolute inset-0" 
           style={{
-            backgroundImage: `url('/download.svg')`,
+            backgroundImage: `url(${partnerData[0]?.brandsImage[0]})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -18,7 +29,7 @@ const Banner = () => {
         />
       </div>
 
-      {/* Content Container */}
+
       <div className="relative container mx-auto px-4 h-full flex justify-center items-center">
         <div className="max-w-[1000px]">
           <motion.h1 
@@ -27,23 +38,37 @@ const Banner = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Crafting digital{" "}
-            <motion.span 
-              className="text-[#6366F1] block ms-[100px]"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              experiences
-            </motion.span>
-            <motion.span
-              className="block"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              since 2004
-            </motion.span>
+          {
+            partnerData[0]?.title.split(" ").map((title, index) => (
+              <>
+                {index <= 1 && (
+                  <span
+                    key={index}
+                    className={`inline me-4`}
+                  >
+                    {title}
+                  </span>
+                )}
+                {index == 2 && (
+                  <p
+                    key={index}
+                    className={`ms-20 text-[#6366F1]`}
+                  >
+                    {title}
+                  </p>
+                )}
+                {index >= 3 && (
+                  <span
+                    key={index}
+                    className={`me-4`}
+                  >
+                    {title}
+                  </span>
+                )}
+              </>
+            ))
+            }
+        
           </motion.h1>
         </div>
       </div>

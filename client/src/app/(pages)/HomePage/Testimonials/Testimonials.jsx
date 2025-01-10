@@ -7,12 +7,14 @@ import { Spin } from "antd";
 export function Testimonials() {
   const containerRef = useRef(null);
   const { data: testimonials, isLoading, error } = useGetTestimonialsQuery();
-  
+
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
+    offset: ["start start", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["400%", "-100%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["500%", "-100%"]);
 
   if (isLoading) {
     return (
@@ -31,11 +33,12 @@ export function Testimonials() {
   }
 
   return (
-    <section 
+    <motion.section  
       ref={containerRef} 
-      className="relative h-[300vh] bg-gradient-to-b from-blue-900 via-black to-black"
+      className="h-[250vh] bg-gradient-to-r from-blue-900 via-black to-[#111111]"
     >
-      <div className="sticky top-0 h-[100vh]">
+      <div className="overflow-hidden mx-auto px-4 sticky top-0 
+      h-[150vh]">
         <div className="max-w-7xl mx-auto px-4 w-full h-full flex items-center">
           <motion.div 
             className="w-full"
@@ -60,16 +63,16 @@ export function Testimonials() {
               </div>
             </motion.div>
             
-            <div className="space-y-20  ">
+            <div className="space-y-20 ">
               {testimonials?.map((testimonial) => (
                 <motion.div
                   key={testimonial._id}
-                  className="bg-gradient-to-r from-gray-900 to-gray-800 p-8 rounded-3xl h-[60vh] relative"
+                  className="border border-gray-700 p-8 rounded-3xl h-[60vh] relative"
                   initial={{ opacity: 0, y: 150 }}
                   whileInView={{ opacity: 1, y: 0 }}  
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  transition={{ duration: 1.5, ease: "easeInOut"}}
                 >
-                  <p className="text-2xl font-light mb-8 leading-relaxed text-white">
+                  <p className="text-2xl font-bold mb-8 leading-relaxed text-white">
                     "{testimonial.description}"
                   </p>
                   
@@ -92,8 +95,9 @@ export function Testimonials() {
               ))}
             </div>
           </motion.div>
+ 
         </div>
       </div>
-    </section>
+    </motion.section >
   );
 } 

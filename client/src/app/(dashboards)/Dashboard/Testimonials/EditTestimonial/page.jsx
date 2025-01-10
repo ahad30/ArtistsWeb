@@ -12,12 +12,11 @@ import { toast } from "sonner";
 
 const EditTestimonial = ({ selectedTestimonial }) => {
   const dispatch = useAppDispatch();
-  const [currentImage, setCurrentImage] = useState(selectedTestimonial?.profileImage);
   const [updateTestimonial, { isLoading, isError, error, isSuccess, data }] = useUpdateTestimonialMutation();
 
   const handleSubmit = async (formData) => {
     try {
-      let imageUrl = currentImage;
+      let imageUrl = selectedTestimonial?.profileImage;
 
       if (formData.profileImage) {
         const image_hosting_key = process.env.NEXT_PUBLIC_HOSTING_KEY;
@@ -56,10 +55,6 @@ const EditTestimonial = ({ selectedTestimonial }) => {
     dispatch(setIsEditModalOpen());
   };
 
-  const handleImageRemove = () => {
-    setCurrentImage(null);
-  };
-
   return (
     <div>
       <ZFormTwo
@@ -95,15 +90,14 @@ const EditTestimonial = ({ selectedTestimonial }) => {
           <ZImageInput
             name="profileImage"
             label="Profile Image"
-            defaultValue={currentImage ? [
+            defaultValue={selectedTestimonial?.profileImage ? [
               {
                 uid: '-1',
                 name: 'Current Image',
                 status: 'done',
-                url: currentImage,
+                url: selectedTestimonial?.profileImage,
               },
             ] : []}
-            onRemove={handleImageRemove}
           />
         </div>
       </ZFormTwo>

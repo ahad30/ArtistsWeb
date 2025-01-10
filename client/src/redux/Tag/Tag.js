@@ -1,10 +1,7 @@
 export const tags = [
  
   // Admin
-  {
-    name: 'Admin', 
-    tag: 'admin', 
-  },
+
   {
     name: 'projects', 
     tag: 'Projects', 
@@ -12,6 +9,23 @@ export const tags = [
   {
     name: 'testimonials', 
     tag: 'Testimonials', 
+  },
+  {
+    name: 'testimonials', 
+    tag: 'Testimonials', 
+  },
+
+  {
+    name: 'heroBanner', 
+    tag: 'Hero Banner', 
+  },
+  {
+    name: 'partnerGoals', 
+    tag: 'PartnerGaols', 
+  },
+  {
+    name: 'services', 
+    tag: 'Services', 
   },
 
 

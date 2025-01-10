@@ -6,6 +6,9 @@ const bcrypt = require('bcrypt');
 const UserModel = require('./models/User');
 const ProjectModel = require('./models/Project');
 const TestimonialModel = require('./models/Testimonial');
+const HeroBannerModel = require('./models/HeroBanner');
+const PartnerGoalsModel = require('./models/PartnerGoals');
+const Service = require("./models/Service");
 
 dotenv.config();
 const app = express();
@@ -260,7 +263,7 @@ app.put('/testimonials/:id', async (req, res) => {
         authorName,
         profileImage
       },
-      { new: true }
+      { new: true , runValidators: true }
     );
 
     if (!updatedTestimonial) {
@@ -295,6 +298,278 @@ app.delete('/testimonials/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error.' });
   }
 });
+
+// Create hero banner
+app.post('/hero-banner', async (req, res) => {
+  try {
+    const { title, subTitle, buttonTitle, achievementTitles } = req.body;
+
+    if (!title || !subTitle || !buttonTitle) {
+      return res.status(400).json({ message: 'Required fields are missing.' });
+    }
+
+    const newHeroBanner = new HeroBannerModel({
+      title,
+      subTitle,
+      buttonTitle,
+      achievementTitles: achievementTitles || []
+    });
+
+    await newHeroBanner.save();
+    res.status(201).json({ 
+      message: 'Hero banner created successfully.',
+      heroBanner: newHeroBanner 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Get all hero banners
+app.get('/hero-banner', async (req, res) => {
+  try {
+    const heroBanners = await HeroBannerModel.find().sort({ createdAt: -1 });
+    res.status(200).json(heroBanners);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Update hero banner
+app.put('/hero-banner/:id', async (req, res) => {
+  try {
+    const { title, subTitle, buttonTitle, achievementTitles } = req.body;
+    
+    const updatedHeroBanner = await HeroBannerModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        subTitle,
+        buttonTitle,
+        achievementTitles
+      },
+      { new: true }
+    );
+
+    if (!updatedHeroBanner) {
+      return res.status(404).json({ message: 'Hero banner not found.' });
+    }
+
+    res.status(200).json({ 
+      message: 'Hero banner updated successfully.',
+      heroBanner: updatedHeroBanner 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Delete hero banner
+app.delete('/hero-banner/:id', async (req, res) => {
+  try {
+    const deletedHeroBanner = await HeroBannerModel.findByIdAndDelete(req.params.id);
+    
+    if (!deletedHeroBanner) {
+      return res.status(404).json({ message: 'Hero banner not found.' });
+    }
+
+    res.status(200).json({ 
+      message: 'Hero banner deleted successfully.',
+      heroBanner: deletedHeroBanner 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Create partner goals
+app.post('/partner-goals', async (req, res) => {
+  try {
+    const { title, description, statTitle1, statTitle2, stateValue1, stateValue2, brandsImage, selectLayout } = req.body;
+
+    if (!title ) {
+      return res.status(400).json({ message: 'Required fields are missing.' });
+    }
+
+    const newPartnerGoals = new PartnerGoalsModel({
+      title,
+      description,
+      statTitle1,
+      statTitle2,
+      stateValue1,
+      stateValue2,
+      brandsImage,
+      selectLayout
+    });
+
+    await newPartnerGoals.save();
+    res.status(201).json({ 
+      message: 'Partner goals created successfully.',
+      partnerGoals: newPartnerGoals 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Get all partner goals
+app.get('/partner-goals', async (req, res) => {
+  try {
+    const partnerGoals = await PartnerGoalsModel.find().sort({ createdAt: -1 });
+    res.status(200).json(partnerGoals);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Update partner goals
+app.put('/partner-goals/:id', async (req, res) => {
+  try {
+    const { title, description, statTitle1, statTitle2, stateValue1, stateValue2, brandsImage, selectLayout } = req.body;
+    
+    const updatedPartnerGoals = await PartnerGoalsModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        description,
+        statTitle1,
+        statTitle2,
+        stateValue1,
+        stateValue2,
+        brandsImage,
+        selectLayout
+      },
+      { new: true }
+    );
+
+    if (!updatedPartnerGoals) {
+      return res.status(404).json({ message: 'Partner goals not found.' });
+    }
+
+    res.status(200).json({ 
+      message: 'Partner goals updated successfully.',
+      partnerGoals: updatedPartnerGoals 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Delete partner goals
+app.delete('/partner-goals/:id', async (req, res) => {
+  try {
+    const deletedPartnerGoals = await PartnerGoalsModel.findByIdAndDelete(req.params.id);
+    
+    if (!deletedPartnerGoals) {
+      return res.status(404).json({ message: 'Partner goals not found.' });
+    }
+
+    res.status(200).json({ 
+      message: 'Partner goals deleted successfully.',
+      partnerGoals: deletedPartnerGoals 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+
+
+// Create a new service
+app.post('/services', async (req, res) => {
+  try {
+    const { serviceTitle, servicePartner, isLatest, image, selectLayout } = req.body;
+
+
+
+    const newService = new Service({
+      serviceTitle,
+      servicePartner,
+      isLatest,
+      image,
+      selectLayout
+    });
+
+    await newService.save();
+    res.status(201).json({
+      message: 'Service created successfully.',
+      service: newService
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Get all services
+app.get('/services', async (req, res) => {
+  try {
+    const services = await Service.find().sort({ createdAt: -1 });
+    res.status(200).json(services);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Update a service
+app.put('/services/:id', async (req, res) => {
+  try {
+    const { serviceTitle, servicePartner, isLatest, image, selectLayout } = req.body;
+
+    const updatedService = await Service.findByIdAndUpdate(
+      req.params.id,
+      {
+        serviceTitle,
+        servicePartner,
+        isLatest,
+        image,
+        selectLayout
+      },
+      { new: true }
+    );
+
+    if (!updatedService) {
+      return res.status(404).json({ message: 'Service not found.' });
+    }
+
+    res.status(200).json({
+      message: 'Service updated successfully.',
+      service: updatedService
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+// Delete a service
+app.delete('/services/:id', async (req, res) => {
+  try {
+    const deletedService = await Service.findByIdAndDelete(req.params.id);
+
+    if (!deletedService) {
+      return res.status(404).json({ message: 'Service not found.' });
+    }
+
+    res.status(200).json({
+      message: 'Service deleted successfully.',
+      service: deletedService
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
 
 // Start server
 app.listen(port, () => {

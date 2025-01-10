@@ -12,17 +12,15 @@ const Dashboard = ({ view, toggle }) => {
   const [activeItem, setActiveItem] = useState();
   const { hamburger, setHamburger } = useContext(HomeContextProvider);
   const pathName = usePathname();
-
+ 
   // Set active menu item based on current pathname
   useEffect(() => {
     const pathToIdMapping = {
       "/Dashboard/AdminHome": "dashboard",
       "/Dashboard/Projects": "projects",
-      "/Dashboard/Clients": "clients",
-      "/Dashboard/Team": "team",
+      "/Dashboard/HeroBanner": "heroBanner",
+      "/Dashboard/Partners": "partners",
       "/Dashboard/Services": "services",
-      "/Dashboard/Portfolio": "portfolio",
-      "/Dashboard/Blog": "blog",
       "/Dashboard/Testimonials": "testimonials",
       "/Dashboard/Settings": "settings",
       "/Dashboard/Analytics": "analytics",
@@ -42,14 +40,14 @@ const Dashboard = ({ view, toggle }) => {
       label: "Projects",
     },
     {
-      id: "clients",
-      path: "/Dashboard/Clients",
-      label: "Clients",
+      id: "heroBanner",
+      path: "/Dashboard/HeroBanner",
+      label: "Hero Banner",
     },
     {
-      id: "team",
-      path: "/Dashboard/Team",
-      label: "Team Members",
+      id: "partners",
+      path: "/Dashboard/Partners",
+      label: "Partners & Team",
     },
     {
       id: "services",
@@ -57,30 +55,10 @@ const Dashboard = ({ view, toggle }) => {
       label: "Services",
     },
     {
-      id: "portfolio",
-      path: "/Dashboard/Portfolio",
-      label: "Portfolio",
-    },
-    {
-      id: "blog",
-      path: "/Dashboard/Blog",
-      label: "Blog Posts",
-    },
-    {
       id: "testimonials",
       path: "/Dashboard/Testimonials",
       label: "Testimonials",
-    },
-    {
-      id: "settings",
-      path: "/Dashboard/Settings",
-      label: "Settings",
-    },
-    {
-      id: "analytics",
-      path: "/Dashboard/Analytics",
-      label: "Analytics",
-    },
+    }
   ];
 
   const customMenuStyle = {
@@ -97,7 +75,7 @@ const Dashboard = ({ view, toggle }) => {
         hamburger ? "left-0" : "left-[-30rem]"
       } md:left-0 z-[30] transition-all duration-500`}
     >
-      <Card className="h-screen no-scrollbar overflow-y-scroll py-2 shadow-xl shadow-blue-gray-900/5 bg-primary rounded-none">
+    <Card className="h-screen no-scrollbar overflow-y-scroll py-2 shadow-xl shadow-blue-gray-900/5 bg-primary rounded-none">
         <div className="flex items-center justify-between">
           <div className="mb-2 mt-3 pl-5">
             <Typography variant="h5" color="white">
@@ -208,7 +186,7 @@ const Dashboard = ({ view, toggle }) => {
         </div>
 
         <Menu
-          className="custom-menu"
+         className="custom-menu"
           style={customMenuStyle}
           mode="inline"
           selectedKeys={[activeItem]}
