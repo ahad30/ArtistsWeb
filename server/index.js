@@ -33,6 +33,10 @@ mongoose.connect("mongodb://localhost:27017/admin").then(() => {
   console.error("MongoDB connection error:", error);
 });
 
+
+
+
+
 // Default route
 app.get('/', (req, res) => {
   res.send('Auth server');
