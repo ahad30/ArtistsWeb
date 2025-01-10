@@ -13,7 +13,7 @@ export function Team() {
   }
 
   if(partnerGoals === 0 || partnerGoalsError){
-    return <div>No Partner Found</div>
+    return <div>No Team Brands Found</div>
   }
 
   return (

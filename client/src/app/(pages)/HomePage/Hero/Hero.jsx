@@ -33,7 +33,7 @@ export function Hero() {
   if (heroBanner?.length === 0 || error) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-semibold">No Projects Found</h1>
+        <h1 className="text-4xl font-semibold">No Hero Banner Found</h1>
       </div>
     );
   }

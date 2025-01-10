@@ -12,8 +12,10 @@ const Banner = () => {
     return <div>Loading...</div>
   }
 
-  if(partnerGoals === 0 || partnerGoalsError){
-    return <div>No Banner Found</div>
+  if(partnerData?.length === 0 || partnerGoalsError){
+    return  <div className="h-screen flex items-center justify-center">
+    <h1 className="text-4xl font-semibold">No  Banner Found</h1>
+  </div>
   }
   return (
     <section className="relative h-screen overflow-hidden">
